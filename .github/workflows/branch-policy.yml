@@ -1,0 +1,55 @@
+name: Branch Policy
+
+on:
+  workflow_call:
+
+jobs:
+  validate-branch-policy:
+    name: Validate branch policy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate PR source and target branches
+        shell: bash
+        run: |
+          BASE_BRANCH="${{ github.base_ref }}"
+          HEAD_BRANCH="${{ github.head_ref }}"
+
+          echo "Base branch: $BASE_BRANCH"
+          echo "Head branch: $HEAD_BRANCH"
+
+          if [[ -z "$BASE_BRANCH" || -z "$HEAD_BRANCH" ]]; then
+            echo "This workflow must run on a pull request."
+            exit 1
+          fi
+
+          if [[ "$BASE_BRANCH" == "develop" ]]; then
+            case "$HEAD_BRANCH" in
+              feature/*|bugfix/*|chore/*|docs/*|refactor/*|test/*)
+                echo "Allowed PR: $HEAD_BRANCH -> $BASE_BRANCH"
+                exit 0
+                ;;
+              *)
+                echo "Invalid PR source branch for develop."
+                echo "Allowed sources into develop: feature/*, bugfix/*, chore/*, docs/*, refactor/*, test/*"
+                exit 1
+                ;;
+            esac
+          fi
+
+          if [[ "$BASE_BRANCH" == "main" ]]; then
+            case "$HEAD_BRANCH" in
+              develop|hotfix/*|release/*)
+                echo "Allowed PR: $HEAD_BRANCH -> $BASE_BRANCH"
+                exit 0
+                ;;
+              *)
+                echo "Invalid PR source branch for main."
+                echo "Allowed sources into main: develop, hotfix/*, release/*"
+                exit 1
+                ;;
+            esac
+          fi
+
+          echo "No branch policy configured for target branch: $BASE_BRANCH"
+          exit 0
