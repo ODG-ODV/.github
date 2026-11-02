@@ -1,0 +1,44 @@
+{
+  "labels": [
+    {
+      "name": "feature",
+      "color": "0E8A16",
+      "description": "New application functionality"
+    },
+    {
+      "name": "bug",
+      "color": "D73A4A",
+      "description": "Bug fixes and corrections"
+    },
+    {
+      "name": "enhancement",
+      "color": "A2EEEF",
+      "description": "Improvements to existing functionality"
+    },
+    {
+      "name": "security",
+      "color": "B60205",
+      "description": "Security fixes or improvements"
+    },
+    {
+      "name": "performance",
+      "color": "5319E7",
+      "description": "Performance optimizations"
+    },
+    {
+      "name": "breaking-change",
+      "color": "D93F0B",
+      "description": "Changes requiring migration or compatibility updates"
+    },
+    {
+      "name": "documentation",
+      "color": "0075CA",
+      "description": "Documentation-only changes"
+    },
+    {
+      "name": "chore",
+      "color": "CFD3D7",
+      "description": "Maintenance, tooling, and internal configuration changes"
+    }
+  ]
+}
